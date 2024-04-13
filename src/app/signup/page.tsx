@@ -59,7 +59,7 @@ export default function SignupPage() {
        type="text" name="password" id="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })}
       placeholder="password"
       />
-      <button onClick={onSignup} className="p-2 border border-gray-300 rounded-lg mb-4 focus:ouline-none focus:border-gray-600">{buttonDisabled ? "Incomplete📄 " : "Signup 😎"}</button>
+      <button onClick={onSignup} className={(buttonDisabled ? "text-gray-600" : "text-white") + " p-2 border " + (buttonDisabled ? "border-gray-600" : "border-gray-300") + " rounded-lg mb-4 focus:ouline-none focus:border-gray-600"}>Signup 😎</button>
       <Toaster />
       <Link href="/login" className="text-blue-500 hover:underline" >(Already have an account? Login)</Link>
     </div>
