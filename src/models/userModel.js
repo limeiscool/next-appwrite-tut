@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema({
   verifyToken: String,
   verifyTokenExpires: Date,
 });
-// !! CANNOT use 3rd model param causes overwrite error
-const User = mongoose.model.users || mongoose.model("users", userSchema);
+// !! when written read as models when creating its model, this will cause overwrite error
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;
