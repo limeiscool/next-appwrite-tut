@@ -21,7 +21,7 @@ export default function LoginPage() {
       const res = await axios.post('/api/users/login', user);
       console.log("👀 A user has logged in!")
       toast.success("😊 Login successful!", res.data)
-      router.push("/profile");
+      router.push("/");
     } catch (error:any) {
       console.log("Login error: ", error.message);
       toast.error(error.message);
@@ -39,7 +39,7 @@ export default function LoginPage() {
   }, [user])
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center py-2">
       <h1>Login</h1>
       <hr />
       <label htmlFor="email">email</label>

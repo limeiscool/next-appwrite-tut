@@ -28,7 +28,7 @@ export default function ProfilePage() {
     setdata(res.data.profile._id);
   }
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div className="flex flex-col items-center justify-center py-2">
       <h1>Profile</h1>
       <hr />
       <p>Profile Page</p>
