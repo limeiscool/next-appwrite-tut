@@ -18,13 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="text-rum-50 min-h-screen grid grid-rows-[auto_1fr]">
-          <NavBar />
-          <div className="bg-zinc-900 flex justify-center align-middle">
-            {children}
-          </div>
-         
-        </div> 
+        <div className="bg-zinc-950">
+          {children}
+        </div>
       </body>
     </html>
   );

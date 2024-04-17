@@ -22,16 +22,16 @@ export default function NavBar() {
   }  
   return (
     
-      <nav className="bg-zinc-800 py-5 flex justify-center align-middle rounded-b-md">
-        <div className="flex justify-between items-center w-screen px-5">
+      <nav className="bg-zinc-800 py-5 rounded-b-md flex items-center justify-center">
+        <div className="flex justify-between px-5 w-full">
           <div className="text-white font-bold text-xl">
-            <Link href="/" className="text-rum-50 hover:text-rum-200">  
-            Next.js App
+            <Link href="/" className="hover:text-spray-200">  
+            <span className="text-spray-200">Ez</span>-Note
             </Link>
           </div>
           <div>
-            <button onClick={logout} className="text-rum-50 hover:text-gray-200">Logout</button>
-            <Link href="/profile" className="text-rum-50 ml-4 rounded-lg py-2 px-3 bg-rum-500 hover:bg-rum-600">Profile</Link>
+            <button onClick={logout} className="hover:text-gray-200">Logout</button>
+            <Link href="/profile" className="ml-4 rounded-lg py-2 px-3 bg-spray-500 hover:bg-spray-600">Profile</Link>
             <Toaster />
           </div>
         </div>

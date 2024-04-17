@@ -1,4 +1,5 @@
 "use client";
+import NavBar from "@/components/NavBar";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -28,6 +29,8 @@ export default function ProfilePage() {
     setdata(res.data.profile._id);
   }
   return (
+    <div className="min-h-screen">
+    <NavBar />
     <div className="flex flex-col items-center justify-center py-2">
       <h1>Profile</h1>
       <hr />
@@ -45,6 +48,7 @@ export default function ProfilePage() {
       onClick={logout}
       className={"bg-blue-500 mt-2 hover:bg-blue-700" + "text-white font-bold py-1 px-4 rounded"}>Logout</button>
       <Toaster />
+    </div>
     </div>
   )
 }
