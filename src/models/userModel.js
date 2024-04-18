@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { title } from "process";
 
 const noteSchema = new mongoose.Schema({
   title: {
@@ -40,8 +39,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   notes: {
-    type: Array,
-    default: [noteSchema],
+    type: [noteSchema],
   },
   forgotPasswordToken: String,
   forgotPasswordTokenExpires: Date,
