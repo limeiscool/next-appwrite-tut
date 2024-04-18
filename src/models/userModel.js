@@ -1,4 +1,20 @@
 import mongoose from "mongoose";
+import { title } from "process";
+
+const noteSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+  Date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -22,6 +38,10 @@ const userSchema = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
     default: false,
+  },
+  notes: {
+    type: Array,
+    default: [noteSchema],
   },
   forgotPasswordToken: String,
   forgotPasswordTokenExpires: Date,

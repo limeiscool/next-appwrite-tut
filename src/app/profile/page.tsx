@@ -12,16 +12,6 @@ import toast, {Toaster} from "react-hot-toast";
 export default function ProfilePage() {
   const router = useRouter();
   const [data, setdata] = useState(false)
-  const logout = async () => {
-    try {
-      await axios.get('/api/users/logout');
-      toast.success('Logout successful! 👋')
-      router.push('/login');
-    } catch (error:any) {
-      console.log("Logout error: ", error.message);
-      toast.error(error.message);
-    }
-  }
 
   const getUserDetails = async () => {
     const res = await axios.get('/api/users/me');
@@ -44,9 +34,6 @@ export default function ProfilePage() {
         }
       </h2>
       <hr />
-      <button
-      onClick={logout}
-      className={"bg-blue-500 mt-2 hover:bg-blue-700" + "text-white font-bold py-1 px-4 rounded"}>Logout</button>
       <Toaster />
     </div>
     </div>

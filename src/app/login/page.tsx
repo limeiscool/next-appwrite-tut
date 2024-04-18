@@ -39,7 +39,7 @@ export default function LoginPage() {
   }, [user])
 
   return (
-    <div className="bg-zinc-950 min-h-screen flex flex-col items-center justify-center py-2">
+    <div className="min-h-screen flex flex-col items-center justify-center py-2">
       <h1>Login</h1>
       <hr />
       <label htmlFor="email">email</label>
