@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import { AiFillDelete } from "react-icons/ai";
 
 import NavBar from "@/components/NavBar";
 
@@ -72,9 +73,6 @@ export default function Home() {
     getNotes();
   }, [noteAdded])
 
-  console.log(notes[0])
-
-   
   return (
    <div className="text-zinc-100 min-h-screen">
     <NavBar /> 
@@ -95,14 +93,14 @@ export default function Home() {
         </div>
         <div className="h-1 bg-spray-400 shadow-spray-200" />
         <div className="flex justify-center items-center h-full px-8 py-10">
-          <div className="w-screen grid grid-cols-2 gap-8 items-center">
+          <div className="w-screen grid grid-cols-2 gap-8 max-w-4xl">
             {notes.length > 0 ? notes.map((obj, i) => {
               return (
-                <div key={i} className="aspect-square border-2 rounded-md border-rum-500 flex">
-                  <div className="w-1 rounded bg-spray-300" />
+                <div key={i} className="aspect-square border-2 rounded-lg border-rum-500 flex">
+                  <div className="w-4 rounded bg-spray-300/60" />
                   <div className="p-4 bg-spray-950/85 w-full flex flex-col">
                     <div className="flex items-center relative">
-                      <button onClick={() => {removeNote(obj._id)}} className="absolute right-0 top-0">X</button>
+                      <button onClick={() => {removeNote(obj._id)}} className="absolute right-0 top-0"><AiFillDelete /></button>
                       <p className="text-xl">{obj.title}</p>
                       <p className="text-sm text-gray-500 ml-3">{obj.Date.getMonth()+1}/{obj.Date.getDate()}/{obj.Date.getFullYear()} - {obj.Date.getHours() % 12 || 12}:{obj.Date.getMinutes()}{obj.Date.getHours() >= 12 ? "pm" : "am"}</p>
                     </div>
@@ -116,6 +114,7 @@ export default function Home() {
           </div>
         </div>
     </div>
+    <Toaster />
    </div> 
   );
 }
