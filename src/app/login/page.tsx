@@ -52,13 +52,13 @@ export default function LoginPage() {
 
     <div className="flex flex-col">
 
-      <div className="mb-7">
+      <div className="felx flex-col mb-4">
       <h1 className="text-2xl text-center mb-2">Login</h1>
       <div className="h-2 bg-spray-900 rounded-full" />
       </div>
 
       <div className="flex flex-col">
-      <label className="" htmlFor="email">Email: </label>
+      <label className="mb-1" htmlFor="email">Email: </label>
       <input
        className="text-black p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
        type="text" name="email" id="email" value={user.email} onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -67,7 +67,7 @@ export default function LoginPage() {
       </div>
 
       <div className="flex flex-col">
-      <label htmlFor="password">Password: </label>
+      <label className="mb-1" htmlFor="password">Password: </label>
       <input
        className="text-black p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
        type="text" name="password" id="password" value={user.password} onChange={(e) => setUser({ ...user, password: e.target.value })}
@@ -75,7 +75,7 @@ export default function LoginPage() {
       />
       </div>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col mt-2">
       <button onClick={onLogin} className="p-2 border border-spray-600 bg-spray-950/40 rounded-lg mb-4 focus:ouline-none hover:border-spray-950">Login</button>
       <Link href="/signup" className="text-spray-500 text-center hover:underline" >(Don&apos;t have an account? SignUp)</Link>
       <Link href="/forgotpassword" className="text-spray-500 text-center hover:underline" >Forgot Password</Link>
