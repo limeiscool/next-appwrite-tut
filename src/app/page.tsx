@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
-
+import { NoteTypes } from "@/types/types";
 import NavBar from "@/components/NavBar";
 
 
@@ -12,13 +12,8 @@ import NavBar from "@/components/NavBar";
 
 
 export default function Home() {
-  interface Note {
-    _id: string;
-    title: string;
-    body: string;
-    Date: Date
-  }
-  const [notes, setNotes] = useState<Note[]>([]);
+  
+  const [notes, setNotes] = useState<NoteTypes[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [noteAdded, setNoteAdded] = useState(false);
@@ -54,7 +49,7 @@ export default function Home() {
      try {
       const res = await axios.get('/api/users/getnotes');
       const { notes } = res.data;
-      const newNoteArr : Note[] = notes.map((note : Note) => {
+      const newNoteArr : NoteTypes[] = notes.map((note : NoteTypes) => {
         return {
           _id: note._id,
           title: note.title,

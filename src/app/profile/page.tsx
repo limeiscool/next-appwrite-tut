@@ -1,39 +1,52 @@
 "use client";
 import NavBar from "@/components/NavBar";
 import axios from "axios";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast, {Toaster} from "react-hot-toast";
 
 
 
 
 export default function ProfilePage() {
-  const router = useRouter();
-  const [data, setdata] = useState(false)
+  const [user, setUser] = useState({
+    _id: "",
+    username: "",
+    email: "",
+    notes: [],
+  });
+  // TODO
+  // getUserDetails on load
+  // use the user profile to display userinfo on the page
+  // maybe something simple like username email and note count
 
-  const getUserDetails = async () => {
-    const res = await axios.get('/api/users/me');
-    console.log(res.data);
-    setdata(res.data.profile._id);
-  }
+  useEffect(() => {
+    const getUserDetails = async () => {
+      try {
+        const res = await axios.get('/api/users/me');
+        console.log(res.data.profile);
+        setUser(res.data.profile);
+      } catch (error:any) {
+        console.log(error.response.status + " " + error.response.data.error)
+        toast.error(error.response.status + " " + error.response.data.error)
+      }
+    }
+    if (!user._id) {
+      getUserDetails();
+    }
+    
+  }, [user]);
+
   return (
     <div className="min-h-screen">
     <NavBar />
     <div className="flex flex-col items-center justify-center py-2">
       <h1>Profile</h1>
-      <hr />
-      <p>Profile Page</p>
-      <h2>
-        {data
-        ? <Link className="hover:text-blue-700" href={`/profile/${data}`}>{data}</Link>
-        : <button
-        onClick={getUserDetails}
-        className={"bg-blue-500 mt-2 hover:bg-blue-700" + "text-white font-bold py-1 px-4 rounded"}>Get User Details</button>
-        }
-      </h2>
-      <hr />
+      <div>
+        <p>Username: {user.username}</p>
+        <p>Profile ID: {user._id}</p>
+        <p>Email: {user.email}</p>
+        <p>Note Count: {user.notes.length}</p>
+      </div>
       <Toaster />
     </div>
     </div>
