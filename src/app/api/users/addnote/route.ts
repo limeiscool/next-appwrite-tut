@@ -27,10 +27,12 @@ export async function POST(request: NextRequest) {
 
     user.notes.push(newNote);
     await user.save();
+    const savedNote = user.notes.slice(-1)[0];
     console.log(title, body);
      
     return NextResponse.json({
-      message: "Note added successfully"
+      message: "Note added successfully!",
+      savedNote: savedNote
     })
   } catch (error:any) {
     return NextResponse.json({

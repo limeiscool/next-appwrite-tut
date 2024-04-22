@@ -6,6 +6,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { AiFillDelete } from "react-icons/ai";
 import { NoteTypes } from "@/types/types";
 import NavBar from "@/components/NavBar";
+import getNoteData from "@/helpers/getNoteData";
+import { updateCacheAdd, updateCacheRemove } from "@/helpers/updateCache";
 
 
 
@@ -16,13 +18,15 @@ export default function Home() {
   const [notes, setNotes] = useState<NoteTypes[]>([]);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [noteAdded, setNoteAdded] = useState(false);
 
   const addNote = async () => {
     try {
-      await axios.post('/api/users/addnote', {title, body});
-      toast.success('Note added successfully! 👍')
-      setNoteAdded(true);
+      const res = await axios.post('/api/users/addnote', {title, body});
+      const { message, savedNote } = res.data
+      updateCacheAdd(savedNote);
+      savedNote.Date = new Date(savedNote.Date);
+      setNotes([savedNote, ...notes]);
+      toast.success(message + ' 👍')
       setTitle("");
       setBody("");
     } catch (error:any) {
@@ -33,10 +37,10 @@ export default function Home() {
 
   const removeNote = async (noteId:string) => {
     try {
-      console.log(noteId);
       await axios.post('/api/users/removenote', {noteId});
+      updateCacheRemove(noteId);
+      setNotes(notes.filter(note => note._id !== noteId));
       toast.success('Note removed successfully! 👍')
-      setNoteAdded(true);
     } catch (error:any) {
       console.log(error.response.status + " " + error.response.data.error)
       toast.error(error.response.status + " " + error.response.data.error)
@@ -45,28 +49,24 @@ export default function Home() {
   
 
   useEffect(() => {
-    const getNotes = async () => {
-     try {
-      const res = await axios.get('/api/users/getnotes');
-      const { notes } = res.data;
-      const newNoteArr : NoteTypes[] = notes.map((note : NoteTypes) => {
-        return {
-          _id: note._id,
-          title: note.title,
-          body: note.body,
-          Date: new Date(note.Date)
-        }
+    const modifyNoteDates = (notes:NoteTypes[]) => {
+      notes.forEach((note:NoteTypes) => {
+        note.Date = new Date(note.Date);
       })
-      setNotes(newNoteArr.reverse());
-      setNoteAdded(false);
-     } catch (error:any) {
-      console.log(error.response.status + " " + error.response.data.error)
-      toast.error(error.response.status + " " + error.response.data.error)
-     } 
+      return notes;
     }
-
-    getNotes();
-  }, [noteAdded])
+    const fetchData = async () => {
+      try {
+        const data = await getNoteData();
+        setNotes(modifyNoteDates(data));
+        console.log(modifyNoteDates(data)); 
+      } catch (error:any) {
+        console.log(error.response.status + " " + error.response.data.error)
+        toast.error(error.response.status + " " + error.response.data.error)  
+      }
+    }
+    fetchData();
+  }, [])
 
   return (
    <div className="text-zinc-100 min-h-screen">
