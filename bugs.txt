@@ -1,2 +1,0 @@
-
-if email is verified need to somehow update the cookie to refelect verification changes

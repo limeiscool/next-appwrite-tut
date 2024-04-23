@@ -97,7 +97,7 @@ export default function Home() {
                     <div className="flex items-center relative">
                       <button onClick={() => {removeNote(obj._id)}} className="absolute right-0 top-0"><AiFillDelete /></button>
                       <p className="text-xl">{obj.title}</p>
-                      <p className="text-sm text-gray-500 ml-3">{obj.Date.getMonth()+1}/{obj.Date.getDate()}/{obj.Date.getFullYear()} - {obj.Date.getHours() % 12 || 12}:{obj.Date.getMinutes()}{obj.Date.getHours() >= 12 ? "pm" : "am"}</p>
+                      <p className="text-sm text-gray-500 ml-3">{obj.Date.getMonth()+1}/{obj.Date.getDate()}/{obj.Date.getFullYear()} - {obj.Date.getHours() % 12 || 12}:{obj.Date.getMinutes() > 9 ? obj.Date.getMinutes() : `0${obj.Date.getMinutes()}`}{obj.Date.getHours() >= 12 ? "pm" : "am"}</p>
                     </div>
                     <div>
                       <p>{obj.body}</p>

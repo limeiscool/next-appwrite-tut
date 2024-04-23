@@ -1,6 +1,7 @@
 import { connect } from "@/db/config";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
+import jwt from "jsonwebtoken";
 
 
 connect();
@@ -28,12 +29,25 @@ export async function POST(request: NextRequest) {
     user.verifyToken = undefined;
     user.verifyTokenExpires = undefined;
     await user.save();
-    return NextResponse.json({
+    const reqCookie = request.cookies.get("token")?.value || "";
+    if (reqCookie) {
+      request.cookies.delete("token");
+    }
+    const tokenData = {
+      id: user._id,
+      email: user.email,
+      username: user.username,
+      isVerified: user.isVerified
+    }
+    const jwtToken = await jwt.sign(tokenData, process.env.TOKEN_SECRET!, {expiresIn: "12h"});
+    const res = NextResponse.json({
       message: "Email verified successfully!",
       success: true
     })
-
-
+    res.cookies.set("token", jwtToken, {
+      httpOnly: true,
+    })
+    return res;
   } catch (error:any) {
    return NextResponse.json({
     error: error.message
