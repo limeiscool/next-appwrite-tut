@@ -3,38 +3,56 @@ import NavBar from "@/components/NavBar";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import toast, {Toaster} from "react-hot-toast";
+import { UserDetailTypes } from "@/types/types";
+import getNoteData from "@/helpers/getNoteData";
 
 
 
 
 export default function ProfilePage() {
-  const [user, setUser] = useState({
+
+  const [user, setUser] = useState<UserDetailTypes>({
     _id: "",
     username: "",
     email: "",
-    notes: [],
+    isVerified: false,
+    noteCount: 0,
   });
-  // TODO
-  // getUserDetails on load
-  // use the user profile to display userinfo on the page
-  // maybe something simple like username email and note count
+
+  const resendVerificationEmail = async () => {
+    try {
+      const res = await axios.post('/api/users/resendverify', {email: user.email, id: user._id});
+      toast.success(res.data.message)
+    } catch (error:any) {
+      console.log(error.response.status + " " + error.response.data.error)
+      toast.error(error.response.status + " " + error.response.data.error) 
+    }
+  }
+  
 
   useEffect(() => {
-    const getUserDetails = async () => {
+    const getDetails = async () => {
       try {
         const res = await axios.get('/api/users/me');
-        console.log(res.data.profile);
-        setUser(res.data.profile);
+        const {id , email, username, isVerified} = res.data.userDetails;
+        const notes = await getNoteData();
+        const userObj = {
+          _id: id,
+          username: username,
+          email: email,
+          isVerified: isVerified,
+          noteCount: notes.length
+        }
+        setUser(userObj);
       } catch (error:any) {
-        console.log(error.response.status + " " + error.response.data.error)
-        toast.error(error.response.status + " " + error.response.data.error)
+       console.log(error.response.status + " " + error.response.data.error)
+       toast.error(error.response.status + " " + error.response.data.error) 
       }
-    }
-    if (!user._id) {
-      getUserDetails();
-    }
+    } 
+
+    getDetails();
     
-  }, [user]);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -45,7 +63,9 @@ export default function ProfilePage() {
         <p>Username: {user.username}</p>
         <p>Profile ID: {user._id}</p>
         <p>Email: {user.email}</p>
-        <p>Note Count: {user.notes.length}</p>
+        <p>Note Count: {user.noteCount}</p>
+        <p>Verified: {user.isVerified ? "Yes" : "No"}</p>
+        {!user.isVerified && <button disabled={user.isVerified} onClick={resendVerificationEmail} className="text-spray-600 hover:underline">resend verification email</button>}
       </div>
       <Toaster />
     </div>

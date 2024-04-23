@@ -82,6 +82,7 @@ export default function SignupPage() {
           <Link href="/login" className="text-spray-500 text-center hover:underline">(Already have an account? Login)</Link>
         </div>
 
+        <Toaster />
       </div>
 
     </div>

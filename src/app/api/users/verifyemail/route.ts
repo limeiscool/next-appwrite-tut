@@ -25,11 +25,11 @@ export async function POST(request: NextRequest) {
     }
     console.log("🚀 User: " + user.username + " has verified their email")
     user.isVerified = true;
-    user.veryifyToken = undefined;
-    user.veryifyTokenExpires = undefined;
+    user.verifyToken = undefined;
+    user.verifyTokenExpires = undefined;
     await user.save();
     return NextResponse.json({
-      message: "Email verified successfully",
+      message: "Email verified successfully!",
       success: true
     })
 

@@ -75,6 +75,7 @@ export default function LoginPage() {
         <Link href="/forgotpassword" className="text-spray-500 text-center hover:underline" >Forgot Password</Link>
       </div>
 
+      <Toaster />
     </div>
     
   </div>

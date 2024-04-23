@@ -6,13 +6,10 @@ import {connect} from "@/db/config";
 connect();
 
 export async function GET(request: NextRequest) {
+
   try {
-    const userData = await getDataFromToken(request);
-    const user = await User.findOne({_id: userData.id}).select("-password");
-    return NextResponse.json({
-      message: "User found",
-      profile: user
-    })
+    const userData = getDataFromToken(request);
+    return NextResponse.json({userDetails: userData})
   } catch (error:any) {
     return NextResponse.json({
       error: error.message

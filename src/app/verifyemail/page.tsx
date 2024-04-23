@@ -2,44 +2,69 @@
 
 import axios from "axios";
 import Link from "next/link";
+import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function VerifyEmailPage() {
-  const [token, setToken] = useState("");
-  const [verified, setVerified] = useState(false);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [token, setToken] = useState(false);
   const [error, setError] = useState(false);
-
-const verifyEmail = async () => {
-    try {
-      const res = await axios.post('/api/users/verifyemail', {token});
-      setVerified(true);
-    } catch (error:any) {
-      setError(true);
-      console.log(error.message)
-    }
-  }
-
-  useEffect(() => {
-    const urlToken = window.location.search.split('=')[1];
-    setToken(urlToken || "");
-  }, [])
-
-  useEffect(() => {
+  const [verified, setVerified] = useState(false);
   
-    if (token) {
-      verifyEmail();
-    }
-  }, [token])
 
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-4xl">Verify Email</h1>
-      <h2 className="p-2 bg-orange-500 text-black">
-        {token ? `${token}` : "no token"}
-      </h2>
-      {verified && <Link className="hover:text-blue-700" href="/login">Login</Link>}
-      {error && <p className="text-red-500">Error verifying email</p>}
-    </div>
-  )
+
+  useEffect(() => {
+    const verifyEmail = async () => {
+      try {
+        const res = await axios.post('/api/users/verifyemail', {token});
+        setVerified(true);
+        toast.success(res.data.message)
+        console.log(res.data.message)
+        router.push('/login');
+      } catch (error:any) {
+        toast.error(error.response.data.error)
+        console.log(error.response.data.error)
+        setError(true);
+        router.push('/login');
+      }
+    }
+
+    const token = searchParams.get("token");
+    if (token) {
+      console.log("🚀 ~ file: page.tsx:VerifyEmailPage ~ useEffect ~ token:", token)
+      setToken(true);
+      verifyEmail();
+    } else {
+      toast.error("No token")
+      console.log("No token")
+      router.push('/login');
+    }
+
+    
+  }, [searchParams, router])
+
+  
+
+  return (<> { token ? error ? (
+      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <p className="text-sm text-slate-500">Error Invalid token! redirecting...</p>
+      </div>
+    ) : verified ? (
+      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <p className="text-sm text-slate-500">Email Verified! redirecting...</p>
+      </div>
+    ) : (
+      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <p className="text-sm text-slate-500">Verifying Email, please wait...</p>
+      </div>
+    ) : (
+      <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <p className="text-sm text-slate-500">No token!</p>
+      </div>
+    )}
+    <Toaster />
+  </>)
 
 }

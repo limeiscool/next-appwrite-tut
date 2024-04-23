@@ -1,3 +1,4 @@
+import { Stringifier } from "postcss";
 
 
 
@@ -7,5 +8,13 @@ export interface NoteTypes {
     title: string;
     body: string;
     Date: Date
+  }
+
+  export interface UserDetailTypes {
+    _id: string;
+    username: string;
+    email: string;
+    isVerified: boolean;
+    noteCount: number;
   }
 

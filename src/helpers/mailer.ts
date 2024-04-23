@@ -13,7 +13,7 @@ export const sendEmail = async({email, emailType, userId}: any) => {
       if (emailType === "VERIFY") { 
         await User.findByIdAndUpdate(userId, {
           verifyToken: hashedToken,
-          verifyTokenExpires: Date.now() + 3600000
+          verifyTokenExpires: Date.now() + (3600000*12)
         }) 
       } else if (emailType === "RESET") {
         await User.findByIdAndUpdate(userId, {

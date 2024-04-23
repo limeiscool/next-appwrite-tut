@@ -1,0 +1,4 @@
+when no cache and a note is added 2 of the same are added;
+maybe something to do with cache creatating in memory
+
+if email is verified need to somehow update the cookie to refelect verification changes
