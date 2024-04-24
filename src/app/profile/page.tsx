@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import toast, {Toaster} from "react-hot-toast";
 import { UserDetailTypes } from "@/types/types";
 import getNoteData from "@/helpers/getNoteData";
+import Link from "next/link";
 
 
 
@@ -66,6 +67,9 @@ export default function ProfilePage() {
         <p>Note Count: {user.noteCount}</p>
         <p>Verified: {user.isVerified ? "Yes" : "No"}</p>
         {!user.isVerified && <button disabled={user.isVerified} onClick={resendVerificationEmail} className="text-spray-600 hover:underline">resend verification email</button>}
+      </div>
+      <div>
+        <Link className="text-red-500 hover:underline" href={`/profile/${user._id}`}>Account actions</Link>
       </div>
       <Toaster />
     </div>
