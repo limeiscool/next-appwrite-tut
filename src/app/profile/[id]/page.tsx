@@ -1,6 +1,8 @@
 "use client";
 import NavBar from "@/components/NavBar";
+import axios from "axios";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function IdPage({params} : any) {
 
@@ -24,6 +26,12 @@ export default function IdPage({params} : any) {
   const handleClearAllNotes = async () => {
     console.log("clearing all notes")
     setShowModal(false);
+    try {
+      await axios.post('/api/users/clearallnotes', {id: params.id});
+      toast.success('All notes cleared! 👍')
+    } catch (error:any) {
+      console.log(error.response.status + " " + error.response.data.error)
+    }
   }
 
   const handleDeleteAccount = async () => {
@@ -53,6 +61,7 @@ export default function IdPage({params} : any) {
         <button onClick={() => buttonClick("deleteAccount")} className="border border-red-600 rounded-lg text-red-500 hover:underline active:text-red-700 px-4 py-2">Delete Account</button>
       </div>
     </div>
+    <Toaster />
     </div>
   )
 }

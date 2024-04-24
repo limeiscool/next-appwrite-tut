@@ -1,10 +1,8 @@
-import { connect } from "@/db/config";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import jwt from "jsonwebtoken";
 
 
-connect();
 
 
 export async function POST(request: NextRequest) {
