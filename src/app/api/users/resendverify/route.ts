@@ -3,8 +3,8 @@ import User from "@/models/userModel.js"
 import { NextRequest, NextResponse } from "next/server";
 import { sendEmail } from "@/helpers/mailer";
 
-connect();
 export async function POST(request: NextRequest) {
+  await connect();
   try {
     const reqBody = await request.json();
     const {email, id} = reqBody;

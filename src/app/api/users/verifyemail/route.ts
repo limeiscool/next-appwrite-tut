@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 import jwt from "jsonwebtoken";
-
+import { connect } from "@/db/config";
 
 
 
 export async function POST(request: NextRequest) {
+  await connect();
   try {
     const reqBody = await request.json();
     const { token } = reqBody;

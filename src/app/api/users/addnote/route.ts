@@ -4,10 +4,10 @@ import { connect } from "@/db/config";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
 
-connect()
 
 
 export async function POST(request: NextRequest) {
+  await connect();
   try {
     const reqBody = await request.json();
     const { title, body } = reqBody;

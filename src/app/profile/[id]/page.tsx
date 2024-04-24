@@ -12,7 +12,7 @@ export default function IdPage({params} : any) {
   const buttonClick = (actionType: string) => {
     switch (actionType) {
       case "clearAllNotes": {
-        setModalContent({title: 'Clear all notes', action: () => handleClearAllNotes()});
+        setModalContent({title: 'Clear all your notes', action: () => handleClearAllNotes()});
         setShowModal(true);
       }
       break;
@@ -44,7 +44,7 @@ export default function IdPage({params} : any) {
     {/* Modal */}
     {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-auto bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg p-8 max-w-md flex flex-col justify-center items-center">
+          <div className="bg-white rounded-lg p-8 max-w-lg flex flex-col justify-center items-center">
             <h3 className="text-lg text-black font-semibold mb-4">Are you sure you want to {modalContent.title}?</h3>
             <div className="flex justify-end">
               <button onClick={modalContent.action} className="bg-red-500 text-white px-4 py-2 rounded-md mr-2">Confirm</button>

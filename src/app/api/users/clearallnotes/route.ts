@@ -1,12 +1,13 @@
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
-
+import { connect } from "@/db/config";
 
 
 
 
 
 export async function POSt(request: NextRequest) {
+  await connect();
   try {
     const reqBody = await request.json();
     const {id} = reqBody;

@@ -3,12 +3,12 @@ import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
-connect();
 
 
 
 
 export async function POST(request: NextRequest) {
+  await connect();
   try {
     const reqBody = await request.json();
     const {noteId } = reqBody;
