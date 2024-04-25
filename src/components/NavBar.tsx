@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import clearAllCaches from "@/helpers/clearCache";
+import deleteCache from "@/helpers/deleteCache";
 
 
 export default function NavBar() {
@@ -13,7 +13,7 @@ export default function NavBar() {
   const logout = async () => {
     try {
       await axios.get('/api/users/logout');
-      clearAllCaches();
+      deleteCache();
       toast.success('Logout successful! 👋')
       router.push('/login');
     } catch (error:any) {

@@ -1,10 +1,13 @@
 "use client";
 import NavBar from "@/components/NavBar";
+import deleteCache from "@/helpers/deleteCache";
 import axios from "axios";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function IdPage({params} : any) {
+  const router = useRouter();
 
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState({title: '', action: () => {}});
@@ -28,8 +31,10 @@ export default function IdPage({params} : any) {
     setShowModal(false);
     try {
       await axios.post('/api/users/clearallnotes', {id: params.id});
+      deleteCache();
       toast.success('All notes cleared! 👍')
     } catch (error:any) {
+      toast.error(error.response.status + " " + error.response.data.error)
       console.log(error.response.status + " " + error.response.data.error)
     }
   }
@@ -37,6 +42,16 @@ export default function IdPage({params} : any) {
   const handleDeleteAccount = async () => {
     console.log("deleting account")
     setShowModal(false);
+    try {
+      deleteCache();
+      await axios.post('/api/users/deleteaccount', {id: params.id});
+      await axios.get('/api/users/logout');
+      toast.success('Account deleted! 👍')
+      router.push('/login');
+    } catch (error:any) {
+      toast.error(error.response.status + " " + error.response.data.error)
+      console.log(error.response.status + " " + error.response.data.error)
+    }
   }
   return (
     <div className="min-h-screen grid grid-rows-[auto_1fr]">
