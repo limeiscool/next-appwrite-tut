@@ -48,7 +48,7 @@ export default function ForgotPasswordPage() {
 
       <div className="flex flex-col">
 
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mb-4 select-none">
           <h1 className="text-3xl text-center mb-2">Forgot Password</h1>
           <p className="text-sm mb-3">Provide your email below an email will be sent to you shortly 📨</p>
           <div className="h-2 bg-spray-900 rounded-full" />
@@ -65,7 +65,7 @@ export default function ForgotPasswordPage() {
 
         <div className="flex flex-col">
           <div className="mb-4 mt-2 h-2 bg-spray-900 rounded-full" />
-          <button disabled={buttonDisabled} onClick={sendForgotPassword} className="mx-auto py-2 px-10 border border-spray-600 bg-spray-950/40 rounded-lg mb-4 focus:ouline-none hover:border-spray-950">Send</button>
+          <button disabled={buttonDisabled} onClick={sendForgotPassword} className={(buttonDisabled ? "text-slate-600 border-slate-600" : "hover:border-spray-950 border-spray-600") + " mx-auto py-2 px-10 border bg-spray-950/40 rounded-lg mb-4 focus:ouline-none"}>Send</button>
           <Toaster />
           <Link className="text-spray-500 text-center hover:underline" href="/login">Go back to Login</Link>
           <Link className="text-spray-500 text-center hover:underline" href="/signup">(Don&apos;t have an account? Signup)</Link>

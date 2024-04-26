@@ -1,5 +1,6 @@
 "use client";
 
+import NavLogoBar from "@/components/NavLogoBar";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -71,31 +72,39 @@ export default function ResetPasswordPage() {
 
   return (<>{
     token &&
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
-      <h1 className="text-4xl mb-4">Reset Password</h1>
-      <hr />
+    <div className="min-h-screen relative flex justify-center items-center">
 
-      <input
-        type="password"
-        placeholder="New Password"
-        className={inputClassSnip + " text-black p-2 border-4 rounded-lg mb-4 focus:outline-none"}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Confirm New Password"
-        className={inputClassSnip + " text-black p-2 border-4 rounded-lg mb-4 focus:outline-none"}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <button
-        className={inputClassSnip + " p-2 border rounded-lg mb-4 focus:ouline-none"}
-        onClick={() => sendResetRequest()}
-        disabled={buttonDisabled}
-      >
-        Reset Password
-      </button>
-      <Toaster />
+      <NavLogoBar />
 
+      <div className="flex flex-col">
+
+      <div className="felx flex-col mb-4">
+        <h1 className="text-2xl text-center mb-2">Reset Password</h1>
+        <div className="h-2 bg-spray-900 rounded-full" />
+      </div>
+
+        <input
+          type="password"
+          placeholder="New Password"
+          className={inputClassSnip + " text-black p-2 border-4 rounded-lg mb-4 focus:outline-none"}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Confirm New Password"
+          className={inputClassSnip + " text-black p-2 border-4 rounded-lg mb-4 focus:outline-none"}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        <button
+          className={(buttonDisabled ? "text-slate-600" : "hover:border-spray-600") + " p-2 border border-spray-400 rounded-lg mb-4 focus:ouline-none"}
+          onClick={() => sendResetRequest()}
+          disabled={buttonDisabled}
+        >
+          Reset Password
+        </button>
+        <Toaster />
+
+      </div>
     </div>
   }</>)
 }
