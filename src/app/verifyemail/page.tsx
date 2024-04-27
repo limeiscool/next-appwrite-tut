@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { Suspense } from "react";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function VerifyEmailPage() {
 
   
 
-  return (<> { token ? error ? (
+  return (<Suspense fallback="loading..."><> { token ? error ? (
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <p className="text-sm text-slate-500">Error Invalid token! redirecting...</p>
       </div>
@@ -65,6 +66,6 @@ export default function VerifyEmailPage() {
       </div>
     )}
     <Toaster />
-  </>)
+  </></Suspense>)
 
 }
