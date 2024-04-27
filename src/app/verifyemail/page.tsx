@@ -1,15 +1,13 @@
 "use client";
 
 import axios from "axios";
-import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Suspense } from "react";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
   const [token, setToken] = useState(false);
   const [error, setError] = useState(false);
   const [verified, setVerified] = useState(false);
@@ -32,7 +30,7 @@ export default function VerifyEmailPage() {
       }
     }
 
-    const token = searchParams.get("token");
+    const token = window.location.search.split("=")[1];
     if (token) {
       console.log("🚀 ~ file: page.tsx:VerifyEmailPage ~ useEffect ~ token:", token)
       setToken(true);
@@ -44,11 +42,11 @@ export default function VerifyEmailPage() {
     }
 
     
-  }, [searchParams, router])
+  }, [router])
 
   
 
-  return (<Suspense fallback="loading..."><> { token ? error ? (
+  return (<> { token ? error ? (
       <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <p className="text-sm text-slate-500">Error Invalid token! redirecting...</p>
       </div>
@@ -66,6 +64,6 @@ export default function VerifyEmailPage() {
       </div>
     )}
     <Toaster />
-  </></Suspense>)
+  </>)
 
 }
